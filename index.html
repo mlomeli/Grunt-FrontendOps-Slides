@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Grunt & Frontend Ops</title>
+
+		<meta name="description" content="Una presentación en reveal.js">
+
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/luxbox.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Grunt & Frontend Ops</h1>
+				</section>
+				<section data-background="#C2E1E8">
+					<h1>Miguel Lomelí</h1>
+
+						<h3>Backend Developer</h3> 
+				</section>
+				<section data-background="#71A9C7">
+					<section>
+					<h2> Qué es Frontend Ops?</h2>
+					<p class="fragment">
+					   Ingenería de front end.
+					</p>
+
+					<p class="fragment">
+					   Surge como una necesidad ante los nuevos retos del desarrollo de FrontEnd.
+					</p>
+					</section>
+
+					<section>
+					<h2 class="">
+					   Mismos conceptos de DevOps, diferentes herramientas.
+					</h1>
+
+					<div class="fragment">			
+    					<li> Manejo de dependencias </li>
+    					<li> Builds y deployments </li>
+    					<li> Pruebas Automatizadas </li>
+    					<li> Revisiones automáticas de código/css </li>
+    					<li> Responsabilidades en el código. </li>
+					</div>
+					</section>
+
+					<aside class="notes">
+						Manejo dependencias: RequireJs, NPM, Bower.
+						Builds and deployment: Yeoman, Grunt build.
+						Automated testing: CasperJS, Phantom JS.
+						Revisiones de código: CSSLint, JSLint.
+						Responsabilidades en el código: YSlow, grunt-pagespeed, Google PageSpeed Insights. Audits.
+
+					</aside>
+				</section>
+
+				<section data-background="#D78B7D">
+					<section>
+						<h3> Manejo de dependencias y paquetes. </h3>
+						<h4> Tus herramientas trabajando juntas.</h4>
+						<p>
+							<img src="workingtogether.gif" />
+						</p>
+					</section>
+										<section>
+						<h2> NPM </h2>
+						<p> Librerías de NodeJs.</p>
+					</section>
+					<section data-markdown>
+
+						<script type="text/template">
+							## Usando NPM
+							npm install
+							```js
+							  ## package.json
+							 {
+							    "name": "awesometheme",
+								"version": "1.0.0",
+								"dependencies": {},
+								"devDependencies": {
+								"grunt": "~0.4.0",
+								"grunt-contrib-watch": "~0.4.3",
+								"grunt-contrib-compass": "~0.2.0",
+								"grunt-shell": "~0.3.1",
+							},
+								 "engines": {
+								 	"node": ">=0.8.0"
+								}
+							}
+
+							```
+						</script>
+					</section>
+					<section>
+						<h2> Bower </h2>
+						<p> Librerías para Frontend. </p>
+					</section>
+					
+					<section data-markdown>
+						<script type="text/template">
+							## Usando Bower
+							bower install
+							```js
+							  ## bower.json
+						 	{
+								"name": "awesometheme",
+								"version": "1.0.0",
+							  	"dependencies": {
+							    	"respond": "fubhy/respond",
+							    	"selectivizr": "fubhy/selectivizr",
+							    	"html5shiv": "fubhy/html5shiv",
+							    	"matchmedia": "fubhy/matchmedia",
+							    	"pie": "fubhy/pie"
+								}
+							}
+							```
+						</script>
+					</section>
+					<aside class="notes">
+						RequireJs, Composer.
+						Bower, NPM, usados por omega. Auorora.
+
+					</aside>
+
+				</section>
+
+
+
+				<section data-background="#F8A78C">
+				<section >
+					    <h3> Escribir código, abrir browser, refresh, refresh, refresh, abrir developer tools, ver log, ver código fuente, escribir código, hacer pruebas. Volver a empezar. </h3>
+
+    					<h4> Porqué seguimos trabajando así? </h4>
+    					<p class="fragment">
+						<img  src="why.gif" />
+						</p>
+				</section>
+					<section>
+						<h2>Grunt</h2>
+						<p>
+							Grunt es una herramienta para correr tareas repetitivas automáticamente.
+						</p>
+						<p>
+							<img  src="grunt-logo.png" />
+						</p>			
+					</section>
+
+
+					<section>
+						<h2>Working with Grunt</h2>
+						<p>
+							<img  src="task.gif" />
+						</p>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## Develop with Grunt Watch
+							Gruntfile.js
+							```js
+							  ## Gruntfile.js
+							  watch: {
+							      options: {
+							        livereload: true
+							      },
+							      sass: {
+							        files: ['sass/{,**/}*.{scss,sass}'],
+							        tasks: ['compass:dev'],
+							        options: {
+							          livereload: true
+							        }
+							      },
+							      registry: {
+							        files: ['*.info', '{,**}/*.{php,inc}'],
+							        tasks: ['shell'],
+							        options: {
+							          livereload: true
+							        }
+							      },
+							      images: {
+							        files: ['images/**']
+							      },
+							      css: {
+							        files: ['css/{,**/}*.css']
+							      },
+							      js: {
+							        files: ['js/{,**/}*.js', '!js/{,**/}*.min.js'],
+							        tasks: ['jshint', 'uglify:dev']
+							      }
+							    },
+
+							    shell: {
+							      all: {
+							        command: 'drush cache-clear theme-registry'
+							      }
+							    },
+							```
+						</script>
+					</section>
+
+										<section data-markdown>
+						<script type="text/template">
+							## Create your build tasks
+
+							```js
+							  ## Gruntfile.js
+
+							compass: {
+							      options: {
+							        config: 'config.rb',
+							        bundleExec: true,
+							        force: true
+							      },
+							      dev: {
+							        options: {
+							          environment: 'development'
+							        }
+							      },
+							      dist: {
+							        options: {
+							          environment: 'production'
+							        }
+							      }
+							    },
+							grunt.registerTask('build', [
+							    'uglify:dist',
+							    'compass:dist',
+							    'jshint'
+							  ]);
+							```
+						</script>
+					</section>
+	<section data-markdown>
+					<script type="text/template">
+						## Test Frontend with Grunt & Casper.js
+						
+						```
+						  ## Gruntfile.js
+						  casperjs: {
+						      options: {
+						        async: {
+						            parallel: false
+						        }
+						      },
+						      files: [
+						        'tests/casperjs/basic.js',
+						        'tests/casperjs/advanced.js',
+						        'tests/**/*.js'
+						      ]
+						    },
+
+						```
+					</script>
+				</section>
+								<section data-markdown>
+									<script type="text/template">
+						##Casper.js tests for Drupal
+						
+						```
+						  casper.test.begin('Tests homepage structure', 3, function suite(test) {
+							  // Open the homepage.
+							  casper.start();
+							  casper.thenOpen('http://localhost/frontpage/', function() {
+							    // Check that we get a 200 response code.
+							    test.assertHttpStatus(200, 'Homepage was loaded successfully.');
+							    // Check the presence of the main items in the page.
+							    test.assertExists('a#logo', 'Header link to the homepage is present.');
+							    test.assertExists('form#user-login-form', 'Login form is present.');
+							  });
+
+							  casper.run(function() {
+							    test.done();
+							  });
+							});
+
+						```
+					</script>
+				</section>
+				<section class="lightblue">
+					<h2>Performance Testing Tools</h2>
+					<p>
+						YSlow, PageSpeed Insights
+					</p>
+					<p>
+					<code>
+					<pre>
+						grunt.loadNpmTasks('grunt-yslow');
+						grunt.loadNpmTasks('grunt-pagespeed');
+					</pre>
+					</code>
+					</p>
+				</section>
+
+			
+				</section>
+				
+
+
+				
+
+
+				<section  data-background="#F2DA79">
+					<h1>Gracias</h1>
+					<h3>Miguel Lomelí</h3>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

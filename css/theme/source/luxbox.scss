@@ -1,0 +1,53 @@
+/**
+ * A simple theme for reveal.js presentations, similar
+ * to the default theme. The accent color is darkblue.
+ *
+ * This theme is Copyright (C) 2012 Owen Versteeg, https://github.com/StereotypicalApps. It is MIT licensed.
+ * reveal.js is Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat:700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic,700italic);
+
+// Override theme settings (see ../template/settings.scss)
+$mainFont: 'Open Sans', sans-serif;
+$mainColor: #222;
+$headingFont: 'Montserrat' , sans-serif;
+$headingColor: #111;
+$headingTextShadow: none;
+$headingTextTransform: none;
+$backgroundColor: #fafafa;
+$linkColor: #bd3d26;
+$linkColorHover: lighten( $linkColor, 20% );
+$selectionBackgroundColor: rgba(0, 0, 0, 0.99);
+
+
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+
+.reveal section img.logo {
+	margin: 15px 0px;
+	background: rgba(255,255,255,0);
+	border: 0px solid #fff;
+	width:20%;
+	box-shadow: 0 0 0px rgba(0, 0, 0, 0);
+
+	-webkit-transition: all .2s linear;
+	   -moz-transition: all .2s linear;
+	    -ms-transition: all .2s linear;
+	     -o-transition: all .2s linear;
+	        transition: all .2s linear;
+}
+
